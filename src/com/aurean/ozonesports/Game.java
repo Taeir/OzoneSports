@@ -13,6 +13,7 @@ public class Game {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private static ArrayList<Game> runningGames = new ArrayList<Game>();
 	
+	//Test for commit
 	
 	public gameType getType(){
 		return GameType;
