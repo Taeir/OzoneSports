@@ -10,6 +10,7 @@ public class Game {
 	};
 	private gameType GameType;
 	private boolean running;
+	private Boolean joinable;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private static ArrayList<Game> runningGames = new ArrayList<Game>();
 	
@@ -50,8 +51,6 @@ public class Game {
 		return game.isGameRunning();
 	}
 	
-	
-	//isgamerunning
 	public void removePlayer(Player player){
 		players.remove(player);
 	}
@@ -65,7 +64,21 @@ public class Game {
 		game.addPlayer(player);
 	}
 	
-	
+	public Boolean getSetJoinable(){ //Im not sure if this works though
+		return joinable; // This is a reference: if you change this output directly, it will also change here.
+	}
+	public boolean getJoinable(){
+		return joinable;
+	}
+	public static boolean getJoinable(Game game){
+		return game.getJoinable();
+	}
+	public void setJoinable(boolean bool){
+		joinable = bool;
+	}
+	public static void setJoinable(Game game, boolean bool){
+		game.setJoinable(bool);
+	}
 	
 	public static ArrayList<Game> getRunningGames(){
 		return runningGames;
