@@ -20,11 +20,12 @@ public class OzoneCmdExecutor implements CommandExecutor {
 		}
 		if (cmd.getName().equalsIgnoreCase("osreload")){
 			if (!Permission.has(sender, "mod.reload")){
+				// If no perm, then log the command and return so it stops executing more code.
 				L.og(sender, cmd, allArgs, Type.noperm, true, false);
 				return true;
 			}
-				
-			L.og(sender, cmd, allArgs, Type.success, false, false);
+			
+			L.og(sender, cmd, allArgs, Type.success, false, false); // Log the command
 			plugin.reloadConfig();
 			sender.sendMessage(ChatColor.GREEN + "OzoneSports " + plugin.getDescription().getVersion() + " reloaded!");
 			return true;
