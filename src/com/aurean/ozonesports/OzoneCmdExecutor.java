@@ -18,7 +18,32 @@ public class OzoneCmdExecutor implements CommandExecutor {
 			else
 				allArgs = arg;
 		}
-		if (cmd.getName().equalsIgnoreCase("osreload")){
+		if (cmd.getName().equalsIgnoreCase("game")){
+			if (!Permission.has(sender, "game")){
+				// If no perm, then log the command and return so it stops executing more code.
+				L.og(sender, cmd, allArgs, Type.noperm, true, false);
+				return true;
+			}
+			
+			switch (args.length){
+			case 0:
+				L.og(sender, cmd, allArgs + " (help)", Type.success, false, false);
+				//Add help for /game here
+				break;
+			case 1:
+				if (args[0].equalsIgnoreCase("allowjoin")){
+					
+				}
+					
+				break;
+			case 2:
+				break;
+			}
+			
+			
+			return true;
+		}
+		else if (cmd.getName().equalsIgnoreCase("osreload")){
 			if (!Permission.has(sender, "mod.reload")){
 				// If no perm, then log the command and return so it stops executing more code.
 				L.og(sender, cmd, allArgs, Type.noperm, true, false);
