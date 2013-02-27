@@ -15,7 +15,7 @@ public class Sporter {
 		this.score = 0;
 	}
 	
-	public static gameType getGameByString(String name){
+	public static gameType getGameTypeByString(String name){
 		name = name.toLowerCase();
 		if (name.equals("football"))
 			return gameType.Football;

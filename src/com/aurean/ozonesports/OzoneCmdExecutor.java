@@ -31,12 +31,37 @@ public class OzoneCmdExecutor implements CommandExecutor {
 				//Add help for /game here
 				break;
 			case 1:
-				if (args[0].equalsIgnoreCase("allowjoin")){
-					
+				if (args[0].equalsIgnoreCase("help")){
+					//Add the same help.
+				}
+				else if (args[0].equalsIgnoreCase("allowjoin")){
+					if (!Permission.has(sender, "game.allowjoin"))
+						L.og(sender, cmd, allArgs, Type.noperm, true, false);
+					else {
+						L.og(sender, cmd, allArgs, Type.fail, true, false);
+						sender.sendMessage(ChatColor.RED + "Correct usage: /game allowjoin <game> [yes/true/no/false]");
+					}
 				}
 					
 				break;
 			case 2:
+				break;
+			case 3:
+				if (args[0].equalsIgnoreCase("allowjoin")){
+					if (!Permission.has(sender, "game.allowjoin")){
+						L.og(sender, cmd, allArgs, Type.noperm, true, false);
+						return true;
+					}
+					
+					L.og(sender, cmd, allArgs, Type.success, false, false);
+					
+					boolean setTo = false;
+					if (args[2].equalsIgnoreCase("no") || args[2].equalsIgnoreCase("false"))
+						setTo = false;
+					else
+						setTo = true;
+					Game.getGameByType(Sporter.getGameTypeByString(args[1])).setJoinable(setTo);
+				}
 				break;
 			}
 			
@@ -57,5 +82,10 @@ public class OzoneCmdExecutor implements CommandExecutor {
 		}
 		return true;
 	}
-
+	
+	public void help(CommandSender sender, String command){
+		if (command.equalsIgnoreCase("game allowjoin")){
+			sender.sendMessage(ChatColor.YELLOW + "Placeholder");
+		}
+	}
 }
