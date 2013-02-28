@@ -51,4 +51,4 @@ Log:
                 Level: severe
 ####################################################################################################
 # Restore defaults option: warning if you change this to true, the default settings will be restored
-
+RestoreToDefaultSettings: false
