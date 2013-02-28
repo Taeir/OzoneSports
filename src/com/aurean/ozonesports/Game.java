@@ -90,6 +90,8 @@ public class Game {
 		}
 		return null;
 	}
+	public static int refnum = 0;
+	public static ArrayList<Player> refs = new ArrayList<Player>();
 	/*
 	public static boolean removePlayer(Player player, gameType game){
 		if (getGameByType(game) == null)
