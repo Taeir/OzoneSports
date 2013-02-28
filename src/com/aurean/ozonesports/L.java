@@ -6,13 +6,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import com.aurean.ozonesports.info.Usage;
+
 public class L {
 	private static Logger log = Logger.getLogger("Minecraft");
 	private static Logger logP;
 	private static OzoneSports plugin = OzoneSports.getInstance();
 	
 	public static enum Type{
-		success, fail, tooManyArgs, notEnoughArgs, noperm, unknown, failTried
+		success, fail, tooManyArgs, notEnoughArgs, noperm, unknown, failTried, refereeLimit
 	};
 	
 	public static void notifier(CommandSender sender, Type type){
@@ -24,6 +26,8 @@ public class L {
 			sender.sendMessage(ChatColor.RED + "Too many arguments!");
 		else if (type == Type.notEnoughArgs)
 			sender.sendMessage(ChatColor.RED + "Not enough arguments!");
+		else if (type == Type.refereeLimit)
+			sender.sendMessage(ChatColor.RED + "Referee Limit reached!");
 	}
 	
 	public static void ogS(String lvl, String msg){
@@ -69,7 +73,7 @@ public class L {
 	}
 	public static void og(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
 		String logmsg = "/" + cmd.getName() + " " + allArgs;
-		String usage = ChatColor.RED + "Correct usage: " + cmd.getUsage().replace("<command>", cmd.getName());
+		String usage = ChatColor.RED + "Correct usage: " + Usage.game(sender, cmd.getName());
 		if (outcome == Type.success){
 			logmsg = sender.getName() + " successfully used " + logmsg;
 			tellUsage = false;
@@ -80,6 +84,8 @@ public class L {
 			tellUsage = false;
 		} else if (outcome == Type.failTried)
 			logmsg = sender.getName() + " Failed/Tried to use " + logmsg;
+		else if (outcome == Type.refereeLimit)
+			logmsg = sender.getName() + " Failed (referee limit) to use " + logmsg;
 		else if (outcome == Type.unknown){
 			logmsg = sender.getName() + " used " + logmsg;
 			tellUsage = false;
