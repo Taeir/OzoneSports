@@ -31,6 +31,7 @@ public class MCSports extends JavaPlugin {
 		if (Config.getLogEnabled("disable"))
 			L.ogP(Config.getLogLevel("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
 		L.disablePlugin();
+		instance = null;
 	}
 	
 	public static MCSports getInstance(){
