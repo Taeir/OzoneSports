@@ -1,11 +1,13 @@
 package com.aurean.ozonesports;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import com.aurean.ozonesports.config.Config;
 import com.aurean.ozonesports.info.Usage;
 
 public class L {
@@ -13,21 +15,39 @@ public class L {
 	private static Logger logP;
 	private static OzoneSports plugin = OzoneSports.getInstance();
 	
+	public static void disablePlugin(){
+		log = null;
+		logP = null;
+		plugin = null;
+	}
+	
 	public static enum Type{
-		success, fail, tooManyArgs, notEnoughArgs, noperm, unknown, failTried, refereeLimit
+		success, fail, tooManyArgs, notEnoughArgs, noperm, refereeLimit, alreadyReferee, unknown
 	};
+	public static String getTypeName(Type type){
+		if (type == Type.noperm) return "No permission";
+		else if (type == Type.fail) return "Invalid syntaxis";
+		else if (type == Type.tooManyArgs) return "Too many arguments";
+		else if (type == Type.notEnoughArgs) return "Not enough arguments";
+		else if (type == Type.refereeLimit) return "Referee limit";
+		else if (type == Type.alreadyReferee) return "Already referee";
+		else if (type == Type.success) return "Success";
+		else return "unknown";
+	}
 	
 	public static void notifier(CommandSender sender, Type type){
 		if (type == Type.noperm)
 			sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
-		else if (type == Type.fail || type == Type.failTried)
+		else if (type == Type.fail)
 			sender.sendMessage(ChatColor.RED + "Incorrect syntaxis!");
 		else if (type == Type.tooManyArgs)
 			sender.sendMessage(ChatColor.RED + "Too many arguments!");
 		else if (type == Type.notEnoughArgs)
 			sender.sendMessage(ChatColor.RED + "Not enough arguments!");
 		else if (type == Type.refereeLimit)
-			sender.sendMessage(ChatColor.RED + "Referee Limit reached!");
+			sender.sendMessage(ChatColor.RED + "You cannot become referee for this game because it already has 2 referees!");
+		else if (type == Type.alreadyReferee)
+			sender.sendMessage(ChatColor.RED + "You are already a referee for a different game!");
 	}
 	
 	public static void ogS(String lvl, String msg){
@@ -53,53 +73,44 @@ public class L {
 		else if (lvl.equalsIgnoreCase("finecommand") || lvl.equalsIgnoreCase("fc") || lvl.equalsIgnoreCase("cf")){logP.fine("[PLAYER_COMMAND] " + msg);}
 		else {logP.info(msg);}
 	}
+	
+	public static void ogP(Level lvl, String msg){
+		plugin.getLogger().log(lvl, msg);
+	}
 
 	public static void ogC(CommandSender sender, String msg, Type outcome, boolean notify) {
-		if (outcome == Type.success)
-			msg = sender.getName() + " Successfully used " + msg;
-		else if (outcome == Type.fail || outcome == Type.tooManyArgs || outcome == Type.notEnoughArgs)
-			msg = sender.getName() + " Failed (invalid syntaxis) to use " + msg;
-		else if (outcome == Type.noperm)
-			msg = sender.getName() + " was denied (no permission) to use " + msg; 
-		else if (outcome == Type.failTried)
-			msg = sender.getName() + " Failed/Tried to use " + msg;
-		else if (outcome == Type.unknown)
-			msg = sender.getName() + " used " + msg;
-		else //IMPOSSIBRU
-			msg = sender.getName() + " used " + msg;
-		ogS("c", msg);
-		if (notify)
-			notifier(sender, outcome);
+		if (Config.getLogCommandEnabled(outcome)){
+			String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, msg, outcome);
+			log.log(Config.getLogCommandLevel(), "[PLAYER_COMMAND] " + logmsg);
+		}
+		if (notify) notifier(sender, outcome);
 	}
 	public static void og(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
-		String logmsg = "/" + cmd.getName() + " " + allArgs;
+		if (Config.getLogCommandEnabled(outcome)){
+			String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, cmd, allArgs, outcome);
+			log.log(Config.getLogCommandLevel(), "[PLAYER_COMMAND] " + logmsg);
+		}
 		String usage = ChatColor.RED + "Correct usage: " + Usage.game(sender, cmd.getName());
-		if (outcome == Type.success){
-			logmsg = sender.getName() + " successfully used " + logmsg;
-			tellUsage = false;
-		} else if (outcome == Type.fail || outcome == Type.tooManyArgs || outcome == Type.notEnoughArgs)
-			logmsg = sender.getName() + " Failed (invalid syntaxis) to use " + logmsg;
-		else if (outcome == Type.noperm){
-			logmsg = sender.getName() + " was denied (no permission) to use " + logmsg;
-			tellUsage = false;
-		} else if (outcome == Type.failTried)
-			logmsg = sender.getName() + " Failed/Tried to use " + logmsg;
-		else if (outcome == Type.refereeLimit)
-			logmsg = sender.getName() + " Failed (referee limit) to use " + logmsg;
-		else if (outcome == Type.unknown){
-			logmsg = sender.getName() + " used " + logmsg;
-			tellUsage = false;
+		if (outcome == Type.success || outcome == Type.noperm) tellUsage = false;
+		if (notify) notifier(sender, outcome);
+		if (tellUsage) sender.sendMessage(usage);
+	}
+	
+	private static String replaceExtra(String msg, CommandSender sender, Command cmd, String allArgs, Type type){
+		return msg.replace("&sender", sender.getName())
+				 .replace("&command", cmd.getName())
+				 .replace("&args", allArgs)
+				 .replace("&extended", getTypeName(type));
+	}
+	private static String replaceExtra(String msg, CommandSender sender, String allArgs, Type type){
+		String newAllArgs = "";
+		for (int i = 1; i < allArgs.split(" ").length;i++){
+			if (newAllArgs.equals("")) newAllArgs = allArgs.split(" ")[i];
+			else newAllArgs = newAllArgs+" "+allArgs.split(" ")[i];
 		}
-		else {
-			logmsg = sender.getName() + " used " + logmsg;
-			tellUsage = false;
-		}
-		ogS("c", logmsg);
-		if (notify){
-			notifier(sender, outcome);
-			if (tellUsage)
-				sender.sendMessage(usage);
-		}
-			
-	}	
+		return msg.replace("&sender", sender.getName())
+				 .replace("&command", allArgs.split(" ")[0])
+				 .replace("&args", newAllArgs)
+				 .replace("&extended", getTypeName(type));
+	}
 }

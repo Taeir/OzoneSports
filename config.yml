@@ -1,0 +1,54 @@
+####################################################################################################
+############################################## LOGGING #############################################
+# MCSports allows (very) extended logging.
+# For example, if someone fails a command, this can also be logged.
+#
+# Valid ampersand values for Format are:
+# - &sender: the sender of the command.
+# - &command: the command used.
+# - &args: the arguments given.
+# - &extended: the extended reason (example: not enough arguments).
+#
+# Levels can be: finest (300), finer (400), fine (500), debug (600), config (700), info (800),
+# warning (900), severe (1000) or a number from 1-1000 (higher is more important).
+# 
+Log:
+    Commands:
+        Success:
+            Enabled: true
+            Format: '&sender Successfully used: /&command &args'
+            ToFile: false
+        Failed:
+            Enabled: false
+            Format: '&sender Failed (&extended) to use: /&command &args'
+            ToFile: false
+        NoPermission:
+            Enabled: false
+            Format: '&sender was denied access to command: /&command &args'
+            ToFile: false
+        Level: info
+        MainFormat: '[PLAYER_COMMAND] &msg'
+        FileName: 'Commands.log'
+        FileLocation: '&serverroot/plugins/MCSports/'
+        FileLogFormat: '[&day-&month-&year &hour:&minute&second] &msg'
+    Initialisation:
+        Enable:
+            Enabled: true
+            Level: info
+        Disable:
+            Enabled: true
+            Level: info
+    Errors:
+        Config:
+            Enabled: true
+            Level: info
+        Plugin:
+            Warning:
+                Enabled: true
+                Level: warning
+            Severe:
+                Enabled: true
+                Level: severe
+####################################################################################################
+# Restore defaults option: warning if you change this to true, the default settings will be restored
+
