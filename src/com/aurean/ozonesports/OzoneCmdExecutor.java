@@ -28,7 +28,7 @@ public class OzoneCmdExecutor implements CommandExecutor {
 		}
 		if (cmd.getName().equalsIgnoreCase("game")){
 			if (!Permission.has(sender, "game")){
-				// If no perm, then log the command and return so it stops executing more code.
+				// If no perm, then log the command and return so it stops executing more code
 				L.og(sender, cmd, allArgs, Type.noperm, true, false);
 				return true;
 			}
