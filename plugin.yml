@@ -1,8 +1,8 @@
-name: OzoneSports
+name: MCSports
 version: Beta1 0.0.1
-description: Aurean plugin for all sorts of sports for Ozonelayer.
+description: Aurean plugin for all sorts of sports for MCSports.
 authors: [Mayoz, Taeir]
-website: http://www.aurean.com/plugin_development/OzoneSports
+website: http://www.aurean.com/plugin_development/MCSports
 main: com.aurean.ozonesports.OzoneSports
 
 commands:
