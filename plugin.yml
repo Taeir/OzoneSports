@@ -1,30 +1,30 @@
-name: OzoneSports
-version: Beta1 0.0.1
-description: Aurean plugin for all sorts of sports for Ozonelayer.
+name: MCSports
+version: 0.0.1 (Beta1)
+description: Aurean plugin for all sorts of sports for MCSports.
 authors: [Mayoz, Taeir]
-website: http://www.aurean.com/plugin_development/OzoneSports
-main: com.aurean.ozonesports.OzoneSports
+website: http://www.aurean.com/plugin_development/MCSports
+main: com.aurean.ozonesports.MCSports
 
 commands:
     game:
         description: placeholder
-        aliases: osgame
-    ozonesports:
-        description: main OzoneSports Command
-        aliases: sports
+        aliases: mcgame
+    sports:
+        description: main MCSports Command
+        aliases: [ozonesports, mcsports]
     referee:
         description: Referee command. Use /referee for more information
-        aliases: osreferee
+        aliases: mcreferee
 
 permissions:
-    ozonesports.mod.game.allowjoin:
+    mcsports.mod.game.allowjoin:
         description: Make a game joinable
         default: op
-    ozonesports.game:
+    mcsports.game:
         description: Allows access to /game (help and info)
         default: true
-    ozonesports.admin.reload:
-        description: Allows to reload OzoneSports config
+    mcsports.admin.reload:
+        description: Allows to reload MCSports config
         default: op
         children:
             ozonesports.ozonesports: true
