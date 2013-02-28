@@ -1,4 +1,4 @@
-package com.aurean.ozonesports;
+/*package com.aurean.ozonesports;
 
 import net.minecraft.server.v1_4_R1.EntityPlayer;
 import net.minecraft.server.v1_4_R1.Packet20NamedEntitySpawn;
@@ -197,3 +197,4 @@ public class OzoneCmdExecutor implements CommandExecutor {
 		
 	}
 }
+*/

@@ -16,15 +16,13 @@ public class CmdOzonesports implements CommandExecutor {
 	@SuppressWarnings("unused")
 	private Command cmd;
 	@SuppressWarnings("unused")
-	private String label = "";
-	@SuppressWarnings("unused")
 	private String[] args;
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!cmd.getName().equalsIgnoreCase("ozonesports")) return false; //Only the ozonesports command should get executed here so this should never trigger.
+		this.allArgs = "";
 		this.sender = sender;
 		this.cmd = cmd;
-		this.label = label;
 		this.args = args;
 		for (String arg : args) {
 			if (!allArgs.equals("")) allArgs = allArgs + " " + arg;
@@ -37,7 +35,7 @@ public class CmdOzonesports implements CommandExecutor {
 		}
 		
 		if (args.length==0){
-			L.og(sender, cmd, allArgs + " (help)", Type.success, false, false);
+			L.og(sender, cmd, allArgs, Type.success, false, false);
 			sender.sendMessage(ChatColor.GREEN + "Server Plugin Coded By: Taeir and Mayoz");
 			sender.sendMessage(ChatColor.GREEN + "Server Maps Created By: Ozoneman, Bugsrus");
 			return true;

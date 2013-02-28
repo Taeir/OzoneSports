@@ -9,16 +9,45 @@ public class Game {
 		Football, Tennis, Croquet, Basketball, Golf, Nothing, NoGame
 	};
 	private gameType GameType;
-	private boolean running;
-	private Boolean joinable;
+	private boolean running = false;
+	private boolean joinable = false;
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private static ArrayList<Game> runningGames = new ArrayList<Game>();
+	private ArrayList<Player> referees = new ArrayList<Player>();
+	private static ArrayList<Game> Games = new ArrayList<Game>();
 	
-	//Test for commit
+	public Game(gameType type){
+		this.GameType = type;
+		Games.add(this);
+	}
 	
+	public static gameType getGameTypeByString(String name){
+		name = name.toLowerCase();
+		if (name.equals("football"))
+			return gameType.Football;
+		else if (name.equals("tennis"))
+			return gameType.Tennis;
+		else if (name.equals("croquet"))
+			return gameType.Croquet;
+		else if (name.equals("basketball"))
+			return gameType.Basketball;
+		else if (name.equals("gold"))
+			return gameType.Golf;
+		else
+			return gameType.Nothing;
+	}
 	public gameType getType(){
 		return GameType;
 	}
+	public String getName(){
+		if (GameType == gameType.Football) return "Football";
+		else if (GameType == gameType.Tennis) return "Tennis";
+		else if (GameType == gameType.Basketball) return "Basketball";
+		else if (GameType == gameType.Golf) return "Golf";
+		else if (GameType == gameType.Croquet) return "Croquet";
+		else if (GameType == gameType.Nothing) return "Nothing";
+		else return null;
+	}
+	
 	public ArrayList<Player> getPlayers(){
 		return players;
 	}
@@ -42,31 +71,35 @@ public class Game {
 			return false;
 		return game.isPlayerInGame(player);
 	}
+	public static boolean isPlayerInAnyGame(Player player){
+		for (Game current : getGames()){
+			if (current.isPlayerInGame(player)) return true;
+		}
+		return false;
+	}
 	
-	
-	public boolean isGameRunning(){
+	public boolean isRunning(){
 		return running;
 	}
-	public static boolean isGameRunning(Game game){
-		return game.isGameRunning();
+	public static boolean isRunning(Game game){
+		return game.isRunning();
 	}
 	
 	public void removePlayer(Player player){
 		players.remove(player);
+		OSPlayer.setCurrentGame(null, player);
 	}
 	public static void removePlayer(Player player, Game game){
 		game.removePlayer(player);
 	}
 	public void addPlayer(Player player){
 		players.add(player);
+		OSPlayer.setCurrentGame(this, player);
 	}
 	public static void addPlayer(Player player, Game game){
 		game.addPlayer(player);
 	}
 	
-	public Boolean getSetJoinable(){ //Im not sure if this works though
-		return joinable; // This is a reference: if you change this output directly, it will also change here.
-	}
 	public boolean getJoinable(){
 		return joinable;
 	}
@@ -80,23 +113,49 @@ public class Game {
 		game.setJoinable(bool);
 	}
 	
+	public ArrayList<Player> getReferees(){
+		return referees;
+	}
+	public static ArrayList<Player> getReferees(Game game){
+		return game.getReferees();
+	}
+	public int getRefereeCount(){
+		return referees.size();
+	}
+	public static int getRefereeCount(Game game){
+		return game.getRefereeCount();
+	}
+	
+	public void addReferee(Player player){
+		referees.add(player);
+		OSPlayer.setAsRefereeFor(this, player);
+	}
+	public static void addReferee(Player player, Game game){
+		game.addReferee(player);
+	}
+	public void removeReferee(Player player){
+		referees.remove(player);
+		OSPlayer.setAsRefereeFor(null, player);
+	}
+	public static void removeReferee(Player player, Game game){
+		game.removeReferee(player);
+	}
+	
+	public static ArrayList<Game> getGames(){
+		return Games;
+	}
 	public static ArrayList<Game> getRunningGames(){
+		ArrayList<Game> runningGames = new ArrayList<Game>();
+		for (Game current : Games){
+			if (current.isRunning()) runningGames.add(current);
+		}
 		return runningGames;
 	}
-	public static Game getGameByType(gameType type){
-		for (Game current : runningGames){
+	public static Game getGame(gameType type){
+		for (Game current : Games){
 			if (current.getType() == type)
 				return current;
 		}
-		return null;
+		return new Game(type);
 	}
-	public static int refnum = 0;
-	public static ArrayList<Player> refs = new ArrayList<Player>();
-	/*
-	public static boolean removePlayer(Player player, gameType game){
-		if (getGameByType(game) == null)
-			return false;
-		getGameByType(game).removePlayer(player);
-		return true;
-	}*/
 }

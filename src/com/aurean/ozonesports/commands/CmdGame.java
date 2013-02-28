@@ -8,21 +8,18 @@ import org.bukkit.command.CommandSender;
 import com.aurean.ozonesports.Game;
 import com.aurean.ozonesports.L;
 import com.aurean.ozonesports.PermHandler;
-import com.aurean.ozonesports.Sporter;
 import com.aurean.ozonesports.L.Type;
 
 public class CmdGame implements CommandExecutor {
 	private String allArgs = "";
 	private CommandSender sender;
 	private Command cmd;
-	@SuppressWarnings("unused")
-	private String label = "";
 	private String[] args;
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!cmd.getName().equalsIgnoreCase("game")) return false; //Only the game command should get executed here so this should never trigger.
+		this.allArgs = "";
 		this.sender = sender;
 		this.cmd = cmd;
-		this.label = label;
 		this.args = args;
 		for (String arg : args) {
 			if (!allArgs.equals("")) allArgs = allArgs + " " + arg;
@@ -36,7 +33,7 @@ public class CmdGame implements CommandExecutor {
 		
 		switch (args.length){
 		case 0:
-			L.og(sender, cmd, allArgs + " (help)", Type.success, false, false);
+			L.og(sender, cmd, allArgs + "(help)", Type.success, false, false);
 			help(sender, "main");
 			break;
 		case 1:
@@ -45,15 +42,19 @@ public class CmdGame implements CommandExecutor {
 				help(sender, "main");
 			}
 			else if (args[0].equalsIgnoreCase("allowjoin")) allowJoin();
+			else if (args[0].equalsIgnoreCase("referee")) referee();
 			else if (args[0].equalsIgnoreCase("start")) start();
 			else L.og(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		case 2:
 			if (args[0].equalsIgnoreCase("start")) start();
+			else if (args[0].equalsIgnoreCase("referee")) referee();
+			else L.og(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		case 3:
 			if (args[0].equalsIgnoreCase("allowjoin")) allowJoin();
 			else if (args[0].equalsIgnoreCase("start")) start();
+			else if (args[0].equalsIgnoreCase("referee")) referee();
 			else L.og(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		}
@@ -86,10 +87,15 @@ public class CmdGame implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Correct usage: /game allowjoin <name> <yes/true/no/false>");
 			return;
 		}
-		Game.getGameByType(Sporter.getGameTypeByString(args[1])).setJoinable(setTo);
+		Game.getGame(Game.getGameTypeByString(args[1])).setJoinable(setTo);
 	}
 	
 	private void start(){
+		
+	}
+	
+	private void referee(){
+		//game referee add <game> <player>
 		
 	}
 	
@@ -103,6 +109,9 @@ public class CmdGame implements CommandExecutor {
 			//vip football will be the same just for donors only
 		}
 		else if (subject.equalsIgnoreCase("allowjoin")){
+			sender.sendMessage(ChatColor.YELLOW + "Placeholder");
+		}
+		else if (subject.equalsIgnoreCase("referee")){
 			sender.sendMessage(ChatColor.YELLOW + "Placeholder");
 		}
 	}
