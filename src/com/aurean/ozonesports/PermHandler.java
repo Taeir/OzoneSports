@@ -3,7 +3,7 @@ package com.aurean.ozonesports;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Permission {
+public class PermHandler {
 	public static enum Perm{
 		reload
 	};
