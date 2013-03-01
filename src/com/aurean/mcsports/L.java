@@ -11,13 +11,9 @@ import com.aurean.mcsports.config.Config;
 import com.aurean.mcsports.info.Usage;
 
 public class L {
-	private static Logger log = Logger.getLogger("Minecraft");
-	private static Logger logP;
 	private static MCSports plugin = MCSports.getInstance();
 	
 	public static void disablePlugin(){
-		log = null;
-		logP = null;
 		plugin = null;
 	}
 	
@@ -50,50 +46,17 @@ public class L {
 			sender.sendMessage(ChatColor.RED + "You are already a referee for a different game!");
 	}
 	
-	public static void ogS(String lvl, String msg){
-		if (lvl.equalsIgnoreCase("finest")){log.finest(msg);}
-		else if (lvl.equalsIgnoreCase("finer")){log.finer(msg);}
-		else if (lvl.equalsIgnoreCase("fine") || lvl.equalsIgnoreCase("f")){log.fine(msg);}
-		else if (lvl.equalsIgnoreCase("info") || lvl.equalsIgnoreCase("i")){log.info(msg);}
-		else if (lvl.equalsIgnoreCase("warning") || lvl.equalsIgnoreCase("w")){log.warning(msg);}
-		else if (lvl.equalsIgnoreCase("severe") || lvl.equalsIgnoreCase("s")){log.severe(msg);}
-		else if (lvl.equalsIgnoreCase("command") || lvl.equalsIgnoreCase("c")){log.info("[PLAYER_COMMAND] " + msg);}
-		else if (lvl.equalsIgnoreCase("finecommand") || lvl.equalsIgnoreCase("fc") || lvl.equalsIgnoreCase("cf")){log.fine("[PLAYER_COMMAND] " + msg);}
-		else {log.info(msg);}
-	}
-	public static void ogP(String lvl, String msg){
-		logP = plugin.getLogger();
-		if (lvl.equalsIgnoreCase("finest")){logP.finest(msg);}
-		else if (lvl.equalsIgnoreCase("finer")){logP.finer(msg);}
-		else if (lvl.equalsIgnoreCase("fine") || lvl.equalsIgnoreCase("f")){logP.fine(msg);}
-		else if (lvl.equalsIgnoreCase("info") || lvl.equalsIgnoreCase("i")){logP.info(msg);}
-		else if (lvl.equalsIgnoreCase("warning") || lvl.equalsIgnoreCase("w")){logP.warning(msg);}
-		else if (lvl.equalsIgnoreCase("severe") || lvl.equalsIgnoreCase("s")){logP.severe(msg);}
-		else if (lvl.equalsIgnoreCase("command") || lvl.equalsIgnoreCase("c")){logP.info("[PLAYER_COMMAND] " + msg);}
-		else if (lvl.equalsIgnoreCase("finecommand") || lvl.equalsIgnoreCase("fc") || lvl.equalsIgnoreCase("cf")){logP.fine("[PLAYER_COMMAND] " + msg);}
-		else {logP.info(msg);}
-	}
-	
-	public static void ogP(Level lvl, String msg){
-		plugin.getLogger().log(lvl, msg);
-	}
-
-	public static void ogC(CommandSender sender, String msg, Type outcome, boolean notify) {
-		if (Config.getLogCommandEnabled(outcome)){
-			String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, msg, outcome);
-			log.log(Config.getLogCommandLevel(), "[PLAYER_COMMAND] " + logmsg);
-		}
-		if (notify) notifier(sender, outcome);
-	}
-	public static void og(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
-		if (Config.getLogCommandEnabled(outcome)){
-			String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, cmd, allArgs, outcome);
-			log.log(Config.getLogCommandLevel(), "[PLAYER_COMMAND] " + logmsg);
-		}
-		String usage = ChatColor.RED + "Correct usage: " + Usage.game(sender, cmd.getName());
-		if (outcome == Type.success || outcome == Type.noperm) tellUsage = false;
-		if (notify) notifier(sender, outcome);
-		if (tellUsage) sender.sendMessage(usage);
+	private static Level getLevelByString(String lvl){
+		if (lvl.equalsIgnoreCase("info") || lvl.equalsIgnoreCase("i")) return Level.INFO;
+		else if (lvl.equalsIgnoreCase("command") || lvl.equalsIgnoreCase("c")) return Level.parse("PLAYER_COMMAND");
+		else if (lvl.equalsIgnoreCase("warning") || lvl.equalsIgnoreCase("w")) return Level.WARNING;
+		else if (lvl.equalsIgnoreCase("fine") || lvl.equalsIgnoreCase("f")) return Level.FINE;
+		else if (lvl.equalsIgnoreCase("severe") || lvl.equalsIgnoreCase("s")) return Level.SEVERE;
+		else if (lvl.equalsIgnoreCase("debug")) return Level.parse("DEBUG");
+		else if (lvl.equalsIgnoreCase("config")) return Level.CONFIG;
+		else if (lvl.equalsIgnoreCase("finer")) return Level.FINER;
+		else if (lvl.equalsIgnoreCase("finest")) return Level.FINEST;
+		else return Level.INFO;
 	}
 	
 	private static String replaceExtra(String msg, CommandSender sender, Command cmd, String allArgs, Type type){
@@ -112,5 +75,37 @@ public class L {
 				 .replace("&command", allArgs.split(" ")[0])
 				 .replace("&args", newAllArgs)
 				 .replace("&extended", getTypeName(type));
+	}
+	
+	public static class og {
+		public static void standard(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
+			if (Config.getLogCommandEnabled(outcome)){
+				String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, cmd, allArgs, outcome);
+				Logger.getLogger("Minecraft").log(Config.getLogCommandLevel(), logmsg);
+			}
+			String usage = ChatColor.RED + "Correct usage: " + Usage.game(sender, cmd.getName());
+			if (outcome == Type.success || outcome == Type.noperm) tellUsage = false;
+			if (notify) notifier(sender, outcome);
+			if (tellUsage) sender.sendMessage(usage);
+		}
+		public static void alternate(CommandSender sender, String msg, Type outcome, boolean notify){
+			if (Config.getLogCommandEnabled(outcome)){
+				String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, msg, outcome);
+				Logger.getLogger("Minecraft").log(Config.getLogCommandLevel(), logmsg);
+			}
+			if (notify) notifier(sender, outcome);
+		}
+		public static void plugin(Level lvl, String msg){
+			plugin.getLogger().log(lvl, msg);
+		}
+		public static void plugin(String lvl, String msg){
+			plugin.getLogger().log(getLevelByString(lvl), msg);
+		}
+		public static void noPrefix(String lvl, String msg){
+			Logger.getLogger("Minecraft").log(getLevelByString(lvl), msg);
+		}
+		public static void noPrefix(Level lvl, String msg){
+			Logger.getLogger("Minecraft").log(lvl, msg);
+		}
 	}
 }

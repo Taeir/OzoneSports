@@ -8,28 +8,27 @@ import com.aurean.mcsports.config.Config;
 
 public class MCSports extends JavaPlugin {
 	private static MCSports instance;
-	public File configFile = new File("plugins/OzoneSports/config.yml");
-	static CustomLogLevel debugLevel;
 	
 	public void onEnable(){
 		instance = this;
-		if (!configFile.exists()){
+		if (!(new File("plugins/MCSports/config.yml")).exists()){
 			getLogger().info("No config.yml found. Creating one...");
 			saveDefaultConfig();
 		}
-		debugLevel = new CustomLogLevel("DEBUG", 600);
+		new CustomLogLevel("DEBUG", 600);
+		new CustomLogLevel("PLAYER_COMMAND", 801);
 
 		getCommand("game").setExecutor(new CmdGame());
 		getCommand("ozonesports").setExecutor(new CmdSports());
 		getCommand("referee").setExecutor(new CmdReferee());
-		if (Config.getLogEnabled("enable"))
-			L.ogP(Config.getLogLevel("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
+		if (Config.Logging.getEnabled.plugin("enable"))
+			L.og.plugin(Config.getLogLevel("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
 	}
 	
 	public void onDisable(){
 		MCSPlayer.disablePlugin();
-		if (Config.getLogEnabled("disable"))
-			L.ogP(Config.getLogLevel("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
+		if (Config.Logging.getEnabled.plugin("disable"))
+			L.og.plugin(Config.getLogLevel("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
 		L.disablePlugin();
 		instance = null;
 	}

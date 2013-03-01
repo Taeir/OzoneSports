@@ -10,7 +10,7 @@
 # - &extended: the extended reason (example: not enough arguments).
 #
 # Levels can be: finest (300), finer (400), fine (500), debug (600), config (700), info (800),
-# warning (900), severe (1000) or a number from 1-1000 (higher is more important).
+# command (801), warning (900), severe (1000) or a number from 1-1000 (higher is more important).
 # 
 Log:
     Commands:
@@ -26,8 +26,7 @@ Log:
             Enabled: false
             Format: '&sender was denied access to command: /&command &args'
             ToFile: false
-        Level: info
-        MainFormat: '[PLAYER_COMMAND] &msg'
+        Level: command
         FileName: 'Commands.log'
         FileLocation: '&serverroot/plugins/MCSports/'
         FileLogFormat: '[&day-&month-&year &hour:&minute&second] &msg'

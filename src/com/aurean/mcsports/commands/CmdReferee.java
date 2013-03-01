@@ -38,12 +38,12 @@ public class CmdReferee implements CommandExecutor {
 		
 		if(!(sender instanceof Player)){
 			sender.sendMessage("You cannot use this command from the Console!");
-			L.og(sender, cmd, allArgs, Type.fail, false, false);
+			L.og.standard(sender, cmd, allArgs, Type.fail, false, false);
 			return true;
 		}
 		
 		if (!PermHandler.has(sender, "donor.referee")){
-			L.og(sender, cmd, allArgs, Type.noperm, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
 			sender.sendMessage(ChatColor.YELLOW + "Apply for Referee at www.aurean.com/something");
 			return true;
 		}
@@ -54,16 +54,16 @@ public class CmdReferee implements CommandExecutor {
 		MCSPlayer osPlayer = MCSPlayer.getMCSPlayer(player);
 
 		if(osPlayer.isReferee()){
-			L.og(sender, cmd, allArgs, Type.alreadyReferee, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.alreadyReferee, true, false);
 			return true;
 		}
 		
 		if(Game.getRefereeCount(osPlayer.getRefereeFor()) == 2) {
-			L.og(sender, cmd, allArgs, Type.refereeLimit, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.refereeLimit, true, false);
 			return true;
 		}
 		
-		L.og(sender, cmd, allArgs, Type.success, false, false);
+		L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 		
 		String nameBefore = sender.getName();
 		

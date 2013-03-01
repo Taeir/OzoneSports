@@ -30,33 +30,33 @@ public class CmdSports implements CommandExecutor {
 		}
 		
 		if (!PermHandler.has(sender, "sports")){
-			L.og(sender, cmd, allArgs, Type.noperm, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
 			return true;
 		}
 		
 		if (args.length==0){
-			L.og(sender, cmd, allArgs, Type.success, false, false);
+			L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 			sender.sendMessage(ChatColor.GREEN + "Server Plugin Coded By: Taeir and Mayoz");
 			sender.sendMessage(ChatColor.GREEN + "Server Maps Created By: Ozoneman, Bugsrus");
 			return true;
 		}
 		else if (args.length == 1){
 			if (args[0].equalsIgnoreCase("help")){
-				L.og(sender, cmd, allArgs, Type.success, false, false);
+				L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 				help("main");
 				return true;
 			} else if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("credits")){
-				L.og(sender, cmd, allArgs, Type.success, false, false);
+				L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 				sender.sendMessage(ChatColor.GREEN + "Server Plugin Coded By: Taeir and Mayoz");
 				sender.sendMessage(ChatColor.GREEN + "Server Maps Created By: Ozoneman, Bugsrus");
 				return true;
 			} else if (args[0].equalsIgnoreCase("reload")){
 				if (!PermHandler.has(sender, "admin.reload")){
-					L.og(sender, cmd, allArgs, Type.noperm, true, false);
+					L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
 					return true;
 				}
 				
-				L.og(sender, cmd, allArgs, Type.success, false, false);
+				L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 				MCSports.getInstance().reloadConfig();
 				sender.sendMessage(ChatColor.GREEN + "MCSports " + MCSports.getInstance().getDescription().getVersion() + " reloaded!");
 				sender.sendMessage(ChatColor.RED + "This feature does not work (yet) for some reason.");
@@ -64,7 +64,7 @@ public class CmdSports implements CommandExecutor {
 			}
 		}
 		//If still not returned, the subcommand was invalid or the amount of arguments too big.
-		L.og(sender, cmd, allArgs, Type.fail, true, true);
+		L.og.standard(sender, cmd, allArgs, Type.fail, true, true);
 		return true;
 	}
 	

@@ -27,35 +27,35 @@ public class CmdGame implements CommandExecutor {
 		}
 
 		if (!PermHandler.has(sender, "game")){
-			L.og(sender, cmd, allArgs, Type.noperm, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
 			return true;
 		}
 		
 		switch (args.length){
 		case 0:
-			L.og(sender, cmd, allArgs + "(help)", Type.success, false, false);
+			L.og.standard(sender, cmd, allArgs + "(help)", Type.success, false, false);
 			help(sender, "main");
 			break;
 		case 1:
 			if (args[0].equalsIgnoreCase("help")){
-				L.og(sender, cmd, allArgs, Type.success, false, false);
+				L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 				help(sender, "main");
 			}
 			else if (args[0].equalsIgnoreCase("allowjoin")) allowJoin();
 			else if (args[0].equalsIgnoreCase("referee")) referee();
 			else if (args[0].equalsIgnoreCase("start")) start();
-			else L.og(sender, cmd, allArgs, Type.fail, true, true);
+			else L.og.standard(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		case 2:
 			if (args[0].equalsIgnoreCase("start")) start();
 			else if (args[0].equalsIgnoreCase("referee")) referee();
-			else L.og(sender, cmd, allArgs, Type.fail, true, true);
+			else L.og.standard(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		case 3:
 			if (args[0].equalsIgnoreCase("allowjoin")) allowJoin();
 			else if (args[0].equalsIgnoreCase("start")) start();
 			else if (args[0].equalsIgnoreCase("referee")) referee();
-			else L.og(sender, cmd, allArgs, Type.fail, true, true);
+			else L.og.standard(sender, cmd, allArgs, Type.fail, true, true);
 			break;
 		}
 		return true;
@@ -63,19 +63,19 @@ public class CmdGame implements CommandExecutor {
 	
 	private void allowJoin(){
 		if (!PermHandler.has(sender, "mod.game.allowjoin")){
-			L.og(sender, cmd, allArgs, Type.noperm, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
 			return;
 		}
 		if (args.length < 3){
-			L.og(sender, cmd, allArgs, Type.notEnoughArgs, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.notEnoughArgs, true, false);
 			return;
 		}
 		if (args.length > 3){
-			L.og(sender, cmd, allArgs, Type.tooManyArgs, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.tooManyArgs, true, false);
 			return;
 		}
 		
-		L.og(sender, cmd, allArgs, Type.success, false, false);
+		L.og.standard(sender, cmd, allArgs, Type.success, false, false);
 		boolean setTo = false;
 		if (args.length == 3)
 		if (args[2].equalsIgnoreCase("no") || args[2].equalsIgnoreCase("false"))
@@ -83,7 +83,7 @@ public class CmdGame implements CommandExecutor {
 		else if (args[2].equalsIgnoreCase("yes") || args[2].equalsIgnoreCase("true"))
 			setTo = true;
 		else {
-			L.og(sender, cmd, allArgs, Type.fail, true, false);
+			L.og.standard(sender, cmd, allArgs, Type.fail, true, false);
 			sender.sendMessage(ChatColor.RED + "Correct usage: /game allowjoin <name> <yes/true/no/false>");
 			return;
 		}

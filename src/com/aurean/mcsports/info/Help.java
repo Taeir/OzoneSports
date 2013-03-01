@@ -39,7 +39,7 @@ public class Help {
 			s.sendMessage(msg);
 			return true;
 		}
-		L.ogC(s, "/"+permission.replace(".", " ")+" (help)", Type.noperm, true);
+		L.og.alternate(s, "/"+permission.replace(".", " ")+" (help)", Type.noperm, true);
 		return false;
 	}
 }
