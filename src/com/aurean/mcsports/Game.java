@@ -11,12 +11,19 @@ public class Game {
 	private gameType GameType;
 	private boolean running = false;
 	private boolean joinable = false;
+	private GameField field;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Player> referees = new ArrayList<Player>();
 	private static ArrayList<Game> Games = new ArrayList<Game>();
 	
 	public Game(gameType type){
 		this.GameType = type;
+		this.field = null;
+		Games.add(this);
+	}
+	public Game(gameType type, GameField field){
+		this.GameType = type;
+		this.field = field;
 		Games.add(this);
 	}
 	
@@ -47,7 +54,9 @@ public class Game {
 		else if (GameType == gameType.Nothing) return "Nothing";
 		else return null;
 	}
-	
+	public GameField getField(){
+		return field;
+	}
 	public ArrayList<Player> getPlayers(){
 		return players;
 	}
