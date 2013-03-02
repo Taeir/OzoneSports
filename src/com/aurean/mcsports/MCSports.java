@@ -22,13 +22,13 @@ public class MCSports extends JavaPlugin {
 		getCommand("ozonesports").setExecutor(new CmdSports());
 		getCommand("referee").setExecutor(new CmdReferee());
 		if (Config.Logging.getEnabled.plugin("enable"))
-			L.og.plugin(Config.getLogLevel("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
+			L.og.plugin(Config.Logging.getLevel.plugin("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
 	}
 	
 	public void onDisable(){
 		MCSPlayer.disablePlugin();
 		if (Config.Logging.getEnabled.plugin("disable"))
-			L.og.plugin(Config.getLogLevel("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
+			L.og.plugin(Config.Logging.getLevel.plugin("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
 		L.disablePlugin();
 		instance = null;
 	}

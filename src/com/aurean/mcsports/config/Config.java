@@ -10,62 +10,11 @@ import com.aurean.mcsports.MCSports;
 import com.aurean.mcsports.L.Type;
 
 public class Config {
+	static void disablePlugin(){
+		config = null;
+	}
 	private static int alreadyChecked = 0;
 	private static FileConfiguration config = MCSports.getInstance().getConfig();
-	public static String getLogCommandFormat(Type type){
-		if (type == Type.success) return config.getString("Log.Commands.Success.Format", "&sender Successfully used: /&command &args");
-		else if (type == Type.noperm) return config.getString("Log.Commands.NoPermission.Format", "&sender was denied access to command: /&command &args");
-		else if (type == Type.fail || type == Type.tooManyArgs || type == Type.notEnoughArgs || type == Type.refereeLimit || type == Type.alreadyReferee)
-			return config.getString("Log.Commands.Failed.Format", "&sender Failed (&extended) to use: /&command &args");
-		else return "&sender used: /&command &args";
-	}
-	
-	public static boolean getLogCommandEnabled(Type type){
-		if (type == Type.success) return config.getBoolean("Log.Commands.Success.Enabled", true);
-		else if (type == Type.noperm) return config.getBoolean("Log.Commands.NoPermission.Enabled", true);
-		else if (type == Type.fail || type == Type.tooManyArgs || type == Type.notEnoughArgs || type == Type.refereeLimit || type == Type.alreadyReferee)
-			return config.getBoolean("Log.Commands.Failed.Enabled", false);
-		else return true;
-	}
-	
-	public static boolean getLogCommandToFile(Type type){
-		if (type == Type.success) return config.getBoolean("Log.Commands.Success.ToFile", false);
-		else if (type == Type.noperm) return config.getBoolean("Log.Commands.NoPermission.ToFile", false);
-		else if (type == Type.fail || type == Type.tooManyArgs || type == Type.notEnoughArgs || type == Type.refereeLimit || type == Type.alreadyReferee)
-			return config.getBoolean("Log.Commands.Failed.ToFile", false);
-		else return false;
-	}
-	
-	public static Level getLogCommandLevel(){
-		String path = "Log.Commands";
-		String Value = config.getString(path+".Level", "info").toLowerCase();
-		return getLevelFromString(Value, path);
-	}
-	
-	public static Level getLogLevel(String type){
-		String setValue = "", path = "";
-		if (type.equalsIgnoreCase("enable")){
-			path = "Log.Initialisation.Enable";
-			setValue = config.getString(path+".Level", "info"); 
-		}
-		else if (type.equalsIgnoreCase("disable")){
-			path = "Log.Initialisation.Disable";
-			setValue = config.getString(path+".Level", "info");
-		}
-		else if (type.equalsIgnoreCase("configerror")) {
-			path = "Log.Errors.Config";
-			setValue = config.getString(path+".Level", "info");
-		}
-		else if (type.equalsIgnoreCase("warning")) {
-			path = "Log.Errors.Plugin.Warning";
-			setValue = config.getString(path+".Level", "warning");
-		}
-		else if (type.equalsIgnoreCase("severe")) {
-			path = "Log.Errors.Plugin.Severe";
-			setValue = config.getString(path+".Level", "severe");
-		}
-		return getLevelFromString(setValue, path);
-	}
 	
 	private static Level getLevelFromString(String Value, String path){
 		if (alreadyChecked>0) alreadyChecked--;
@@ -181,7 +130,7 @@ public class Config {
 				}
 				else if (type.equalsIgnoreCase("command")){
 					path = "Log.Commands";
-					setValue = config.getString(path+".Level", "info").toLowerCase();
+					setValue = config.getString(path+".Level", "command").toLowerCase();
 				}
 				return getLevelFromString(setValue, path);
 			}

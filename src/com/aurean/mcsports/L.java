@@ -79,9 +79,9 @@ public class L {
 	
 	public static class og {
 		public static void standard(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
-			if (Config.getLogCommandEnabled(outcome)){
-				String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, cmd, allArgs, outcome);
-				Logger.getLogger("Minecraft").log(Config.getLogCommandLevel(), logmsg);
+			if (Config.Logging.getEnabled.command(outcome)){
+				String logmsg = replaceExtra(Config.Logging.getFormat.command(outcome), sender, cmd, allArgs, outcome);
+				Logger.getLogger("Minecraft").log(Config.Logging.getLevel.command(), logmsg);
 			}
 			String usage = ChatColor.RED + "Correct usage: " + Usage.game(sender, cmd.getName());
 			if (outcome == Type.success || outcome == Type.noperm) tellUsage = false;
@@ -89,9 +89,9 @@ public class L {
 			if (tellUsage) sender.sendMessage(usage);
 		}
 		public static void alternate(CommandSender sender, String msg, Type outcome, boolean notify){
-			if (Config.getLogCommandEnabled(outcome)){
-				String logmsg = replaceExtra(Config.getLogCommandFormat(outcome), sender, msg, outcome);
-				Logger.getLogger("Minecraft").log(Config.getLogCommandLevel(), logmsg);
+			if (Config.Logging.getEnabled.command(outcome)){
+				String logmsg = replaceExtra(Config.Logging.getFormat.command(outcome), sender, msg, outcome);
+				Logger.getLogger("Minecraft").log(Config.Logging.getLevel.command(), logmsg);
 			}
 			if (notify) notifier(sender, outcome);
 		}

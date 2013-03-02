@@ -41,13 +41,16 @@ Log:
         Config:
             Enabled: true
             Level: info
+            ToFile: false
         Plugin:
             Warning:
                 Enabled: true
                 Level: warning
+                ToFile: false
             Severe:
                 Enabled: true
                 Level: severe
+                ToFile: false
 ####################################################################################################
 # Restore defaults option: warning if you change this to true, the default settings will be restored
 RestoreToDefaultSettings: false
