@@ -12,13 +12,45 @@ import com.aurean.mcsports.info.Usage;
 
 public class L {
 	private static MCSports plugin = MCSports.getInstance();
-	
+		
+	/**
+	 * <br><p>This <b>must</b> be called when the plugin is being disabled.<br>
+	 * It clears any static references in its class and thus prevents memory leaks.</p>
+	 */
 	public static void disablePlugin(){
 		plugin = null;
 	}
-	
+
+	/**
+	 * <br><p>The result type of a command.</p>
+	 */
 	public static enum Type{
-		success, fail, tooManyArgs, notEnoughArgs, noperm, refereeLimit, alreadyReferee, unknown
+		/**
+		 * <br>A command that was executed successfully.
+		 */
+		success, /**
+		 * <br>A command that failed because of invalid syntaxis.
+		 */
+		fail, /**
+		 * <br>A command that failed because of too many arguments.
+		 */
+		tooManyArgs, /**
+		 * <br>A command that failed because of not enough arguments.
+		 */
+		notEnoughArgs, /**
+		 * <br>A command that failed because the sender has no permission for it.
+		 */
+		noperm, /**
+		 * <br>A command that failed because the sender reached his referee limit.
+		 */
+		refereeLimit, /**
+		 * <br>A command that failed because the sender is already a referee.
+		 */
+		alreadyReferee, /**
+		 * @deprecated Usage of this reason is not advised.
+		 * A command that failed because of an unknown reason.
+		 */
+		unknown
 	};
 	public static String getTypeName(Type type){
 		if (type == Type.noperm) return "No permission";
@@ -47,6 +79,7 @@ public class L {
 	}
 	
 	private static Level getLevelByString(String lvl){
+		//FYI this has a specific order so the most common used item should get found first.
 		if (lvl.equalsIgnoreCase("info") || lvl.equalsIgnoreCase("i")) return Level.INFO;
 		else if (lvl.equalsIgnoreCase("command") || lvl.equalsIgnoreCase("c")) return Level.parse("PLAYER_COMMAND");
 		else if (lvl.equalsIgnoreCase("warning") || lvl.equalsIgnoreCase("w")) return Level.WARNING;
@@ -77,7 +110,32 @@ public class L {
 				 .replace("&extended", getTypeName(type));
 	}
 	
+	
+	/**
+	 * <br>The main Logging class.<br>
+	 * Usage of logging: L.og.method(arguments);
+	 */
 	public static class og {
+		/**
+		 * <br><p>The same as L.og.standard(sender, cmd, allArgs, outcome, false, false)<br>
+		 * {@link #standard(CommandSender, Command, String, Type, boolean, boolean)}</p>
+		 */
+		public static void standard(CommandSender sender, Command cmd, String allArgs, Type outcome){
+			standard(sender, cmd, allArgs, outcome, false, false);
+		}
+		/**
+		 * <br><p>The same as L.og.standard(sender, cmd, allArgs, outcome, notify, false)
+		 * {@link #standard(CommandSender, Command, String, Type, boolean, boolean)}</p>
+		 */
+		public static void standard(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify){
+			standard(sender, cmd, allArgs, outcome, notify, false);
+		}
+		/**
+		 * <br><p>Logs a message to the console and server.log</p>
+		 * 
+		 * @param notify - Whether or not to notify the user of his mistake. Example: "You dont have permission!"
+		 * @param tellUsage - Whether or not to tell the correct usage to the sender. Example: "Correct usage: /say message"
+		 */
 		public static void standard(CommandSender sender, Command cmd, String allArgs, Type outcome, boolean notify, boolean tellUsage){
 			if (Config.Logging.getEnabled.command(outcome)){
 				String logmsg = replaceExtra(Config.Logging.getFormat.command(outcome), sender, cmd, allArgs, outcome);
@@ -88,6 +146,12 @@ public class L {
 			if (notify) notifier(sender, outcome);
 			if (tellUsage) sender.sendMessage(usage);
 		}
+
+		/**
+		 * <br><p>Logs a message to the console and server.log</p>
+		 * 
+		 * @param notify - Whether or not to notify the user of his mistake. Example: "You dont have permission!"
+		 */
 		public static void alternate(CommandSender sender, String msg, Type outcome, boolean notify){
 			if (Config.Logging.getEnabled.command(outcome)){
 				String logmsg = replaceExtra(Config.Logging.getFormat.command(outcome), sender, msg, outcome);
@@ -95,15 +159,31 @@ public class L {
 			}
 			if (notify) notifier(sender, outcome);
 		}
+		/**
+		 * <br><p>Logs a message with the plugin prefix to the console and server.log<br>
+		 * Example: [LEVEL] [MCSports] message</p>
+		 */
 		public static void plugin(Level lvl, String msg){
 			plugin.getLogger().log(lvl, msg);
 		}
+		/**
+		 * <br><p>Logs a message with the plugin prefix to the console and server.log<br>
+		 * Example: [LEVEL] [MCSports] message</p>
+		 */
 		public static void plugin(String lvl, String msg){
 			plugin.getLogger().log(getLevelByString(lvl), msg);
 		}
+		/**
+		 * <br><p>Logs a message to the console and server.log<br>
+		 * Example: [LEVEL] message</p>
+		 */
 		public static void noPrefix(String lvl, String msg){
 			Logger.getLogger("Minecraft").log(getLevelByString(lvl), msg);
 		}
+		/**
+		 * <br><p>Logs a message to the console and server.log<br>
+		 * Example: [LEVEL] message</p>
+		 */
 		public static void noPrefix(Level lvl, String msg){
 			Logger.getLogger("Minecraft").log(lvl, msg);
 		}

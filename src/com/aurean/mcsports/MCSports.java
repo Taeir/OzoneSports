@@ -1,6 +1,8 @@
 package com.aurean.mcsports;
 
 import java.io.File;
+
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.aurean.mcsports.commands.*;
@@ -15,12 +17,15 @@ public class MCSports extends JavaPlugin {
 			getLogger().info("No config.yml found. Creating one...");
 			saveDefaultConfig();
 		}
-		new CustomLogLevel("DEBUG", 600);
-		new CustomLogLevel("PLAYER_COMMAND", 801);
+		new CustomLogLevel("DEBUG", 801);
+		new CustomLogLevel("PLAYER_COMMAND", 802);
 
 		getCommand("game").setExecutor(new CmdGame());
 		getCommand("ozonesports").setExecutor(new CmdSports());
 		getCommand("referee").setExecutor(new CmdReferee());
+		PluginManager pluginManager = this.getServer().getPluginManager();
+		MCSListener PlayerEventHandler = new MCSListener();
+		pluginManager.registerEvents(PlayerEventHandler, this);
 		if (Config.Logging.getEnabled.plugin("enable"))
 			L.og.plugin(Config.Logging.getLevel.plugin("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
 	}
@@ -28,7 +33,7 @@ public class MCSports extends JavaPlugin {
 	public void onDisable(){
 		MCSPlayer.disablePlugin();
 		if (Config.Logging.getEnabled.plugin("disable"))
-			L.og.plugin(Config.Logging.getLevel.plugin("disable"), "OzoneSports " + getDescription().getVersion() + " disabled!");
+			L.og.plugin(Config.Logging.getLevel.plugin("disable"), "MCSports " + getDescription().getVersion() + " disabled!");
 		L.disablePlugin();
 		instance = null;
 	}
