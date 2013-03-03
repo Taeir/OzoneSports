@@ -37,7 +37,7 @@ public class Game {
 			return gameType.Croquet;
 		else if (name.equals("basketball"))
 			return gameType.Basketball;
-		else if (name.equals("gold"))
+		else if (name.equals("golf"))
 			return gameType.Golf;
 		else
 			return gameType.Nothing;
