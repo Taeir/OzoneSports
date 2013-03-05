@@ -44,7 +44,7 @@ public class CmdReferee implements CommandExecutor {
 		
 		if (!PermHandler.has(sender, "donor.referee")){
 			L.og.standard(sender, cmd, allArgs, Type.noperm, true, false);
-			sender.sendMessage(ChatColor.YELLOW + "Apply for Referee at www.aurean.com/something");
+			sender.sendMessage(ChatColor.YELLOW + "Apply for Referee at www.mcstadium.com/referee/apply");
 			return true;
 		}
 		
