@@ -1,4 +1,4 @@
-package com.aurean.mcsports.balls;
+package com.aurean.mcsports.objects;
 
 import org.bukkit.Location;
 import org.bukkit.World;
