@@ -6,7 +6,6 @@ import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
 import com.aurean.mcsports.Game;
-import com.aurean.mcsports.GameField;
 
 public class BlockBall extends Ball {
 	Block ballBlock;

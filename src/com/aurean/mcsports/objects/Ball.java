@@ -5,7 +5,6 @@ import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 import com.aurean.mcsports.Game;
-import com.aurean.mcsports.GameField;
 
 public abstract class Ball {
 	private Location loc;

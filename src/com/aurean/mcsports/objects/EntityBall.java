@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.aurean.mcsports.Game;
-import com.aurean.mcsports.GameField;
 import com.aurean.mcsports.MCSports;
 import com.aurean.mcsports.Settings;
 

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bukkit.entity.Player;
 
+import com.aurean.mcsports.objects.GameField;
 import com.aurean.mcsports.objects.Goal;
 
 public class Game {

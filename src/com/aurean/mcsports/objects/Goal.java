@@ -3,7 +3,6 @@ package com.aurean.mcsports.objects;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import com.aurean.mcsports.GameField;
 
 public class Goal {
 	GameField field;

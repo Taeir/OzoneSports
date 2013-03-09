@@ -1,10 +1,9 @@
-package com.aurean.mcsports;
+package com.aurean.mcsports.objects;
 
 import java.util.ArrayList;
 
 import org.bukkit.Location;
 
-import com.aurean.mcsports.objects.Goal;
 
 public class GameField {
 	public Location first, second;
@@ -78,12 +77,12 @@ public class GameField {
 			//We should perhaps make sure that this does not count as a valid field.
 		}
 	}
-	double getLargest(String coord){
+	public double getLargest(String coord){
 		if (coord.equalsIgnoreCase("x")) return xLargest;
 		else if (coord.equalsIgnoreCase("z")) return zLargest;
 		return 0; //When someone calls this method with an unknown coord
 	}
-	double getSmallest(String coord){
+	public double getSmallest(String coord){
 		if (coord.equalsIgnoreCase("x")) return xSmallest;
 		else if (coord.equalsIgnoreCase("z")) return zSmallest;
 		return 0;
