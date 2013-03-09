@@ -10,7 +10,7 @@ import com.aurean.mcsports.MCSports;
 import com.aurean.mcsports.L.Type;
 
 public class Config {
-	static void disablePlugin(){
+	public static void disablePlugin(){
 		config = null;
 	}
 	private static int alreadyChecked = 0;
