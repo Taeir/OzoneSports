@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.bukkit.Location;
 
+import com.aurean.mcsports.objects.Goal;
+
 public class GameField {
 	public Location first, second;
 	String name;
@@ -11,6 +13,19 @@ public class GameField {
 	static int count;
 	public double xLargest, xSmallest, zLargest, zSmallest;
 	private static ArrayList<GameField> allFields = new ArrayList<GameField>();
+	private ArrayList<Goal> goals = new ArrayList<Goal>();
+	
+	public GameField(String name, Location first, Location second, Goal goal1, Goal goal2){
+		goals.add(goal1);
+		goals.add(goal2);
+		this.name = name;
+		this.first = first;
+		this.second = second;
+		setSize();
+		id = count;
+		count++;
+		allFields.add(this);
+	}
 	
 	public GameField(String name, Location first, Location second) {
 		this.name = name;
@@ -24,6 +39,13 @@ public class GameField {
 	
 	public static ArrayList<GameField> getAllFields(){
 		return allFields;
+	}
+	
+	public void addGoal(Goal goal){
+		goals.add(goal);
+	}
+	public void removeGoal(Goal goal){
+		goals.remove(goal);
 	}
 	
 	private void setSize(){
@@ -73,5 +95,8 @@ public class GameField {
 			return true;
 		}
 		else return false;
+	}
+	public ArrayList<Goal> getGoals(){
+		return goals;
 	}
 }

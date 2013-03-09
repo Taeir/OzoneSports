@@ -11,8 +11,8 @@ public class Goal {
 	Location corner1;
 	Location corner2;
 	
-	public Goal(String name, Location l1, Location l2, GameField field){
-		this.name = name;
+	public Goal(String teamName, Location l1, Location l2, GameField field){
+		this.name = teamName;
 		this.corner1 = l1;
 		this.corner2 = l2;
 		this.field = field;

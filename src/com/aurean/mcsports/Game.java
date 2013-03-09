@@ -1,8 +1,13 @@
 package com.aurean.mcsports;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.bukkit.entity.Player;
+
+import com.aurean.mcsports.objects.Goal;
 
 public class Game {
 	public static enum gameType{
@@ -15,16 +20,29 @@ public class Game {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Player> referees = new ArrayList<Player>();
 	private static ArrayList<Game> Games = new ArrayList<Game>();
+	Map<Goal, Integer> points = new HashMap<Goal, Integer>();
 	
-	public Game(gameType type){
+	/*public Game(gameType type){
 		this.GameType = type;
 		this.field = null;
 		Games.add(this);
-	}
+	}*/
 	public Game(gameType type, GameField field){
 		this.GameType = type;
 		this.field = field;
+		Goal g;
+		for (Iterator<Goal> localIterator = field.getGoals().iterator(); localIterator.hasNext(); points.put(g, Integer.valueOf(0))){
+			g = (Goal) localIterator.next();
+		}
 		Games.add(this);
+	}
+	
+	public void addPoint(Goal g){
+		points.put(g, Integer.valueOf(points.get(g).intValue() + 1));
+		String msg = Settings.GoalMessage.replace("&team", g.name);
+		for (Player current : players){
+			current.sendMessage(msg);
+		}
 	}
 	
 	public static gameType getGameTypeByString(String name){
@@ -168,6 +186,6 @@ public class Game {
 			if (current.getType() == type)
 				return current;
 		}
-		return new Game(type);
+		return null;
 	}
 }
