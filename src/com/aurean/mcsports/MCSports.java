@@ -41,4 +41,5 @@ public class MCSports extends JavaPlugin {
 	public static MCSports getInstance(){
 		return instance;
 	}
+
 }
