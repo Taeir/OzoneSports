@@ -11,14 +11,12 @@ import com.aurean.mcsports.config.Config;
 import com.aurean.mcsports.info.Usage;
 
 public class L {
-	private static MCSports plugin = MCSports.getInstance();
-		
 	/**
 	 * <br><p>This <b>must</b> be called when the plugin is being disabled.<br>
 	 * It clears any static references in its class and thus prevents memory leaks.</p>
 	 */
 	public static void disablePlugin(){
-		plugin = null;
+		
 	}
 
 	/**
@@ -164,14 +162,14 @@ public class L {
 		 * Example: [LEVEL] [MCSports] message</p>
 		 */
 		public static void plugin(Level lvl, String msg){
-			plugin.getLogger().log(lvl, msg);
+			MCSports.logger.log(lvl, msg);
 		}
 		/**
 		 * <br><p>Logs a message with the plugin prefix to the console and server.log<br>
 		 * Example: [LEVEL] [MCSports] message</p>
 		 */
 		public static void plugin(String lvl, String msg){
-			plugin.getLogger().log(getLevelByString(lvl), msg);
+			MCSports.logger.log(getLevelByString(lvl), msg);
 		}
 		/**
 		 * <br><p>Logs a message to the console and server.log<br>
