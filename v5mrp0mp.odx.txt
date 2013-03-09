@@ -1,0 +1,18 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+	new file:   megil2al.vqn.txt
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+	rzdtdidj.3ao.txt
+	
+	Trying to fix commits...
+

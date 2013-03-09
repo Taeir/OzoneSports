@@ -1,0 +1,52 @@
+﻿Squashed commit of the following:
+
+commit 0f20a1503eaa8517b1197ada096e998e2a7f7d78
+Author: Mayoz34 <alistair.mayo@aurean.com>
+Date:   Mon Mar 04 20:41:04 2013 -0500
+
+	Changed Ref Apply Link
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	deleted:    bin/GcBlockListener.class
+#	deleted:    bin/GcClubs.class
+#	deleted:    bin/GcCommands.class
+#	deleted:    bin/GcConfig.class
+#	deleted:    bin/GcEntityListener.class
+#	deleted:    bin/GcFiles.class
+#	deleted:    bin/GcHole.class
+#	deleted:    bin/GcPlayerListener.class
+#	deleted:    bin/GcSigns$1.class
+#	deleted:    bin/GcSigns.class
+#	deleted:    bin/Golfcraft.class
+#	deleted:    bin/com/aurean/mcsports/.gitignore
+#	deleted:    bin/com/aurean/mcsports/CustomLogLevel.class
+#	deleted:    bin/com/aurean/mcsports/Game$gameType.class
+#	deleted:    bin/com/aurean/mcsports/Game.class
+#	deleted:    bin/com/aurean/mcsports/GameField.class
+#	deleted:    bin/com/aurean/mcsports/L$Type.class
+#	deleted:    bin/com/aurean/mcsports/L$og.class
+#	deleted:    bin/com/aurean/mcsports/L.class
+#	deleted:    bin/com/aurean/mcsports/MCSListener.class
+#	deleted:    bin/com/aurean/mcsports/MCSPlayer.class
+#	deleted:    bin/com/aurean/mcsports/MCSports.class
+#	deleted:    bin/com/aurean/mcsports/PermHandler$Perm.class
+#	deleted:    bin/com/aurean/mcsports/PermHandler.class
+#	deleted:    bin/com/aurean/mcsports/commands/CmdGame.class
+#	deleted:    bin/com/aurean/mcsports/commands/CmdReferee.class
+#	deleted:    bin/com/aurean/mcsports/commands/CmdSports.class
+#	deleted:    bin/com/aurean/mcsports/config/CheckConfig.class
+#	deleted:    bin/com/aurean/mcsports/config/Config$Logging$getEnabled.class
+#	deleted:    bin/com/aurean/mcsports/config/Config$Logging$getFormat.class
+#	deleted:    bin/com/aurean/mcsports/config/Config$Logging$getLevel.class
+#	deleted:    bin/com/aurean/mcsports/config/Config$Logging$getToFile.class
+#	deleted:    bin/com/aurean/mcsports/config/Config$Logging.class
+#	deleted:    bin/com/aurean/mcsports/config/Config.class
+#	deleted:    bin/com/aurean/mcsports/info/Help.class
+#	deleted:    bin/com/aurean/mcsports/info/Usage.class
+#
+
