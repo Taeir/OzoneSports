@@ -12,14 +12,6 @@ import com.aurean.mcsports.info.Usage;
 
 public class L {
 	/**
-	 * <br><p>This <b>must</b> be called when the plugin is being disabled.<br>
-	 * It clears any static references in its class and thus prevents memory leaks.</p>
-	 */
-	public static void disablePlugin(){
-		
-	}
-
-	/**
 	 * <br><p>The result type of a command.</p>
 	 */
 	public static enum Type{
