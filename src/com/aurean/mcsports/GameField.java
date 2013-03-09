@@ -1,13 +1,17 @@
 package com.aurean.mcsports;
 
+import java.util.ArrayList;
+
 import org.bukkit.Location;
 
 public class GameField {
-	Location first, second;
+	public Location first, second;
 	String name;
 	int id = 0;
 	static int count;
-	double xLargest, xSmallest, zLargest, zSmallest;
+	public double xLargest, xSmallest, zLargest, zSmallest;
+	private static ArrayList<GameField> allFields = new ArrayList<GameField>();
+	
 	public GameField(String name, Location first, Location second) {
 		this.name = name;
 		this.first = first;
@@ -15,6 +19,11 @@ public class GameField {
 		setSize();
 		id = count;
 		count++;
+		allFields.add(this);
+	}
+	
+	public static ArrayList<GameField> getAllFields(){
+		return allFields;
 	}
 	
 	private void setSize(){
@@ -56,5 +65,13 @@ public class GameField {
 		if (coord.equalsIgnoreCase("x")) return xSmallest;
 		else if (coord.equalsIgnoreCase("z")) return zSmallest;
 		return 0;
+	}
+	public boolean isInField(Location loc){
+		double x = loc.getX();
+		double z = loc.getZ();
+		if (x < xLargest && x > xSmallest && z < zLargest && z > zSmallest){
+			return true;
+		}
+		else return false;
 	}
 }

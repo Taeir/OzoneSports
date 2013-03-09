@@ -57,6 +57,9 @@ public class Game {
 	public GameField getField(){
 		return field;
 	}
+	public GameField getField(Game game){
+		return game.getField();
+	}
 	public ArrayList<Player> getPlayers(){
 		return players;
 	}
