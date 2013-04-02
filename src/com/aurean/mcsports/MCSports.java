@@ -32,6 +32,23 @@ public class MCSports extends JavaPlugin {
 		pluginManager.registerEvents(PlayerEventHandler, this);
 		if (Config.Logging.getEnabled.plugin("enable"))
 			L.og.plugin(Config.Logging.getLevel.plugin("enable"), "MCSports " + getDescription().getVersion() + " enabled!");
+		/*##############################################################
+		 
+		 We need to decide what kind of ball we want to use.
+		 Thats really the main thing holding us back.
+		 We can use:
+		
+		 1) A block that moves if you click it (Ender egg, normal block)
+		 2) An item that moves on the ground in the direction you were facing when you picked it up.
+		 		Downfall: tackling/stealing the ball is kinda difficult.
+		 3) A bow to shoot special balls
+		 		I think it might be good for basketball. You can pass it by hitting other players,
+		 		and others can intercept it quite easy that way (just like in normal basketball).
+		 		
+		 		Aiming is also very good this way and it has a charge time.
+ 		4) If you have any other ideas please say so.
+ 		
+ 		##############################################################*/
 	}
 	
 	public void onDisable(){
