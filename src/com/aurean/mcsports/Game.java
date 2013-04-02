@@ -33,7 +33,7 @@ public class Game {
 		this.field = field;
 		Goal g;
 		for (Iterator<Goal> localIterator = field.getGoals().iterator(); localIterator.hasNext(); points.put(g, Integer.valueOf(0))){
-			g = (Goal) localIterator.next();
+			g = localIterator.next();
 		}
 		Games.add(this);
 	}

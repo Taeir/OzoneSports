@@ -63,7 +63,7 @@ public class MCSListener implements Listener{
 	public void onShoot(EntityShootBowEvent event){
 		World world = event.getEntity().getWorld();
 		Entity proj = event.getProjectile();
-		Snowball newProj = (Snowball)world.spawn(proj.getLocation(), Snowball.class);
+		Snowball newProj = world.spawn(proj.getLocation(), Snowball.class);
 		newProj.setShooter(event.getEntity());
 		newProj.setVelocity(proj.getVelocity());
 		newProj.setBounce(true);

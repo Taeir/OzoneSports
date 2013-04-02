@@ -18,7 +18,7 @@ public class Config {
 	
 	private static Level getLevelFromString(String Value, String path){
 		if (alreadyChecked>0) alreadyChecked--;
-		if (Value == null) {if (alreadyChecked>0) return Level.INFO;}
+		if (Value == null) {/*if (alreadyChecked>0) */return Level.INFO;}
 		if (Value.equals("info")) return Level.INFO;
 		else if (Value.equals("command")) return Level.parse("PLAYER_COMMAND");
 		else if (Value.equals("config")) return Level.CONFIG;
