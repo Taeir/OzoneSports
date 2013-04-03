@@ -25,7 +25,7 @@ public class MCSListener implements Listener{
 		MCSPlayer mcsPlayer = MCSPlayer.getMCSPlayer(player);
 		
 		if (!mcsPlayer.isInGame()) return;
-		Game currentGame = mcsPlayer.getCurrentGame();
+		Game currentGame = mcsPlayer.getGame();
 		if (!currentGame.isRunning()) return;
 		
 		//Check if out of bounds
@@ -35,10 +35,10 @@ public class MCSListener implements Listener{
 		double PlayerZ = PlayerLocation.getZ();
 		float PlayerYaw = PlayerLocation.getYaw();
 		float PlayerPitch = PlayerLocation.getPitch();
-		double FieldLX = currentGame.getField().getLargest("x");
-		double FieldLZ = currentGame.getField().getLargest("z");
-		double FieldSX = currentGame.getField().getSmallest("x");
-		double FieldSZ = currentGame.getField().getSmallest("z");
+		double FieldLX = currentGame.getField().getLargest('x');
+		double FieldLZ = currentGame.getField().getLargest('z');
+		double FieldSX = currentGame.getField().getSmallest('x');
+		double FieldSZ = currentGame.getField().getSmallest('z');
 		
 		//If player not within field, then teleport him to the last field coord maintaining his orientation.
 		if (PlayerX>FieldLX){

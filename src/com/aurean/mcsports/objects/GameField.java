@@ -1,6 +1,7 @@
 package com.aurean.mcsports.objects;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.bukkit.Location;
 
@@ -26,6 +27,23 @@ public class GameField {
 		allFields.add(this);
 	}
 	
+	/**
+	 * @param name
+	 * @param first
+	 * @param second
+	 * @param goals A collection of goals to add (can be List<\Goal>, ArrayList<\Goal> etc.)
+	 */
+	public GameField(String name, Location first, Location second, Collection<? extends Goal> goals){
+		this.goals.addAll(goals);
+		this.name = name;
+		this.first = first;
+		this.second = second;
+		setSize();
+		id = count;
+		count++;
+		allFields.add(this);
+	}
+	
 	public GameField(String name, Location first, Location second) {
 		this.name = name;
 		this.first = first;
@@ -40,6 +58,10 @@ public class GameField {
 		return allFields;
 	}
 	
+	/**
+	 * Adds an unassigned goal to this field.
+	 * @param goal
+	 */
 	public void addGoal(Goal goal){
 		goals.add(goal);
 	}
@@ -77,14 +99,14 @@ public class GameField {
 			//We should perhaps make sure that this does not count as a valid field.
 		}
 	}
-	public double getLargest(String coord){
-		if (coord.equalsIgnoreCase("x")) return xLargest;
-		else if (coord.equalsIgnoreCase("z")) return zLargest;
+	public double getLargest(char coord){
+		if (coord == 'x') return xLargest;
+		else if (coord == 'z') return zLargest;
 		return 0; //When someone calls this method with an unknown coord
 	}
-	public double getSmallest(String coord){
-		if (coord.equalsIgnoreCase("x")) return xSmallest;
-		else if (coord.equalsIgnoreCase("z")) return zSmallest;
+	public double getSmallest(char coord){
+		if (coord == 'x') return xSmallest;
+		else if (coord == 'z') return zSmallest;
 		return 0;
 	}
 	public boolean isInField(Location loc){
@@ -95,6 +117,9 @@ public class GameField {
 		}
 		else return false;
 	}
+	/**
+	 * @return All the goals in this field.
+	 */
 	public ArrayList<Goal> getGoals(){
 		return goals;
 	}

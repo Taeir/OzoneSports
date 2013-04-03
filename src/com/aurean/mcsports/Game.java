@@ -9,8 +9,9 @@ import org.bukkit.entity.Player;
 
 import com.aurean.mcsports.objects.GameField;
 import com.aurean.mcsports.objects.Goal;
+import com.aurean.mcsports.objects.Team;
 
-public class Game {
+public abstract class Game {
 	public static enum gameType{
 		Football, Tennis, Croquet, Basketball, Golf, Nothing, NoGame
 	};
@@ -19,6 +20,7 @@ public class Game {
 	private boolean joinable = false;
 	private GameField field;
 	private ArrayList<Player> players = new ArrayList<Player>();
+	protected ArrayList<Team> teams = new ArrayList<Team>();
 	private ArrayList<Player> referees = new ArrayList<Player>();
 	private static ArrayList<Game> Games = new ArrayList<Game>();
 	Map<Goal, Integer> points = new HashMap<Goal, Integer>();
@@ -40,7 +42,7 @@ public class Game {
 	
 	public void addPoint(Goal g){
 		points.put(g, Integer.valueOf(points.get(g).intValue() + 1));
-		String msg = Settings.GoalMessage.replace("&team", g.name);
+		String msg = Settings.GoalMessage.replace("&team", g.getTeam().getName());
 		for (Player current : players){
 			current.sendMessage(msg);
 		}
@@ -123,6 +125,10 @@ public class Game {
 	public static void removePlayer(Player player, Game game){
 		game.removePlayer(player);
 	}
+	/**
+	 * Add a player to this game, and set his currentgame to this.
+	 * @param player
+	 */
 	public void addPlayer(Player player){
 		players.add(player);
 		MCSPlayer.setCurrentGame(this, player);
@@ -130,6 +136,8 @@ public class Game {
 	public static void addPlayer(Player player, Game game){
 		game.addPlayer(player);
 	}
+	
+	public abstract boolean addPlayer(Player player, Team team);
 	
 	public boolean getJoinable(){
 		return joinable;
