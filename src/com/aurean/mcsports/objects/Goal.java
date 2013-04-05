@@ -5,6 +5,11 @@ import org.bukkit.util.Vector;
 
 
 public class Goal {
+	@Override
+	public String toString() {
+		return "Goal [field=" + field.name + ", team=" + team.getName() + ", corner1="
+				+ corner1 + ", corner2=" + corner2 + "]";
+	}
 	private GameField field;
 	private Team team;
 	Location corner1;
@@ -25,8 +30,8 @@ public class Goal {
 	
 	public Goal(Team team, Location l1, Location l2, GameField field){
 		this.setTeam(team);
-		this.corner1 = l1;
-		this.corner2 = l2;
+		this.corner1 = l1.clone();
+		this.corner2 = l2.clone();
 		this.field = field;
 	}
 	

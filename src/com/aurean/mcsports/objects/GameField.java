@@ -10,8 +10,8 @@ public class GameField {
 	public Location first, second;
 	String name;
 	int id = 0;
-	static int count;
-	public double xLargest, xSmallest, zLargest, zSmallest;
+	private static int count;
+	public int xLargest, xSmallest, zLargest, zSmallest;
 	private static ArrayList<GameField> allFields = new ArrayList<GameField>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 	
@@ -46,8 +46,9 @@ public class GameField {
 	
 	public GameField(String name, Location first, Location second) {
 		this.name = name;
-		this.first = first;
-		this.second = second;
+		this.first = first.clone();
+		this.second = second.clone();
+		
 		setSize();
 		id = count;
 		count++;
@@ -70,10 +71,10 @@ public class GameField {
 	}
 	
 	private void setSize(){
-		double x1 = first.getX();
-		double x2 = second.getX();
-		double z1 = first.getZ();
-		double z2 = second.getZ();
+		int x1 = first.getBlockX();
+		int x2 = second.getBlockX();
+		int z1 = first.getBlockZ();
+		int z2 = second.getBlockZ();
 		if (x1 > x2) {
 			xLargest = x1;
 			xSmallest = x2;
@@ -99,12 +100,12 @@ public class GameField {
 			//We should perhaps make sure that this does not count as a valid field.
 		}
 	}
-	public double getLargest(char coord){
+	public int getLargest(char coord){
 		if (coord == 'x') return xLargest;
 		else if (coord == 'z') return zLargest;
 		return 0; //When someone calls this method with an unknown coord
 	}
-	public double getSmallest(char coord){
+	public int getSmallest(char coord){
 		if (coord == 'x') return xSmallest;
 		else if (coord == 'z') return zSmallest;
 		return 0;

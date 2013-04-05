@@ -54,13 +54,14 @@ public class GcEntityListener implements Listener
 		onEntityTarget_Func(event);
 	}
 
+	//@EventHandler(priority=EventPriority.HIGH)
+	//public void onEntityShootBow(EntityShootBowEvent event)
+	//{
+	//	onEntityShootBow_Func(event);
+	//}
+	
 	@EventHandler(priority=EventPriority.HIGH)
-	public void onEntityShootBow(EntityShootBowEvent event)
-	{
-		onEntityShootBow_Func(event);
-	}
-
-	private void onEntityShootBow_Func(EntityShootBowEvent event)
+	private void onEntityShootBow(EntityShootBowEvent event)
 	{
 		if ((event.getEntity() instanceof Player)) {
 			Player shooter = (Player)event.getEntity();
@@ -240,18 +241,18 @@ public class GcEntityListener implements Listener
 		if ((event.getEntity() instanceof Snowball)) {
 			Snowball proj = (Snowball)event.getEntity();
 			Snowball newBall = null;
-			Integer bounceInt = Integer.valueOf(this.plugin.getConfig().getInt("number-of-bounces"));
+			int bounceInt = Integer.valueOf(this.plugin.getConfig().getInt("number-of-bounces"));
 
 			if ((this.bounce1.size() > 0) && (this.bounce1.contains(proj))) {
 				this.bounce1.remove(proj);
 				if (!bounce.containsKey(shooter)) {
 					bounce.put(shooter, Integer.valueOf(0));
 				}
-				Integer bounceMap = bounce.get(shooter);
-				if (bounceMap.intValue() <= bounceInt.intValue()) {
+				int bounceMap = bounce.get(shooter);
+				if (bounceMap <= bounceInt) {
 					newBall = makeNewBall(proj, getReflectedVector(proj, proj.getVelocity().multiply(0.5D)));
 					this.bounce1.add(newBall);
-					bounce.put(shooter, Integer.valueOf(bounceMap.intValue() + 1));
+					bounce.put(shooter, Integer.valueOf(bounceMap + 1));
 				}
 				else {
 					bounce.remove(shooter);

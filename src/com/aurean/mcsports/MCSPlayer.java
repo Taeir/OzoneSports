@@ -7,12 +7,13 @@ import org.bukkit.inventory.PlayerInventory;
 
 import com.aurean.mcsports.objects.Ball;
 import com.aurean.mcsports.objects.Team;
-
-public class MCSPlayer {
+/*
+ * Maybe we should use some metadata instead?
+*/
+public class MCSPlayer{
 	private Player player;
 	private Game currentGame;
 	private Game refereeFor;
-	private int score = 0;
 	private Team team;
 	private Ball ball;
 	
@@ -27,6 +28,11 @@ public class MCSPlayer {
 		allOSPlayers.add(this);
 	}
 	
+	/**
+	 * Creates a new MCSPlayer if none exists.
+	 * @param player
+	 * @return The MCSPlayer of this player.
+	 */
 	public static MCSPlayer getMCSPlayer(Player player){
 		for (MCSPlayer current: allOSPlayers){
 			if (current.getPlayer().equals(player))
@@ -100,56 +106,32 @@ public class MCSPlayer {
 		this.team = team;
 	}
 	
+	/** @return If this player currently has the(/a) ball. */
 	public boolean hasBall(){
 		return ball != null;
 	}
-	/**
-	 * @return The ball the player currently has, or null if he has none.
-	 */
+	/** @return The ball the player currently has, or null if he has none. */
 	public Ball getBall(){
 		return ball;
 	}
-	/**
-	 * Give the given ball to this player.
-	 * @param ball
-	 */
+	/** Give the given ball to this player. */
 	public void giveBall(Ball ball){
 		this.ball = ball;
 	}
-	/**
-	 * Remove the ball from this player.
-	 */
+	/** Remove the ball from this player. */
 	public void removeBall(){
 		this.ball = null;
 	}
 	
+	/** @deprecated This loops through all players to set the game.<br>Only use this if you only need to access <b>only 1</b> of this mcsplayer's methods. */
 	public static boolean isInGame(Player player){
 		return getMCSPlayer(player).isInGame();
 	}
-	
-	
-	public int getScore(){
-		return score;
-	}
-	public static int getScore(Player player){
-		return getMCSPlayer(player).getScore();
-	}
-	public void setScore(int newscore){
-		score = newscore;
-	}
-	public static void setScore(int newscore, Player player){
-		getMCSPlayer(player).setScore(newscore);
-	}
-	public void addToScore(int value){
-		score = score+value;
-	}
-	public static void addToScore(int value, Player player){
-		getMCSPlayer(player).addToScore(value);
-	}
-	
+	/** @deprecated This loops through all players to set the game.<br>Only use this if you only need to access <b>only 1</b> of this mcsplayer's methods. */
 	public static Game getCurrentGame(Player player){
 		return getMCSPlayer(player).getGame();
 	}
+	/** @deprecated This loops through all players to set the game.<br>Only use this if you only need to access <b>only 1</b> of this mcsplayer's methods. */
 	static void setCurrentGame(Game game, Player player){
 		//Game.removePlayer(player, currentGame);
 		getMCSPlayer(player).setGame(game);
@@ -174,4 +156,13 @@ public class MCSPlayer {
 	public static void setAsRefereeFor(Game game, Player player){
 		getMCSPlayer(player).setAsRefereeFor(game);
 	}
+
+	@Override
+	public String toString() {
+		return "MCSPlayer [player=" + player.getName() + ", currentGame=" + currentGame
+				+ ", refereeFor=" + refereeFor + ", team=" + team + ", ball="
+				+ ball + "]";
+	}
+
+	
 }

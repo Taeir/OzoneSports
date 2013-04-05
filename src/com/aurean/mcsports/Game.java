@@ -12,6 +12,13 @@ import com.aurean.mcsports.objects.Goal;
 import com.aurean.mcsports.objects.Team;
 
 public abstract class Game {
+	@Override
+	public String toString() {
+		return "Game [GameType=" + GameType + ", running=" + running
+				+ ", joinable=" + joinable + ", field=" + field + ", players="
+				+ players.toString() + ", teams=" + teams.toString() + ", referees=" + referees.toString()
+				+ "]";
+	}
 	public static enum gameType{
 		Football, Tennis, Croquet, Basketball, Golf, Nothing, NoGame
 	};
@@ -23,7 +30,7 @@ public abstract class Game {
 	protected ArrayList<Team> teams = new ArrayList<Team>();
 	private ArrayList<Player> referees = new ArrayList<Player>();
 	private static ArrayList<Game> Games = new ArrayList<Game>();
-	Map<Goal, Integer> points = new HashMap<Goal, Integer>();
+	//private Map<Goal, Integer> points = new HashMap<Goal, Integer>();
 	
 	/*public Game(gameType type){
 		this.GameType = type;
@@ -33,20 +40,21 @@ public abstract class Game {
 	public Game(gameType type, GameField field){
 		this.GameType = type;
 		this.field = field;
-		Goal g;
-		for (Iterator<Goal> localIterator = field.getGoals().iterator(); localIterator.hasNext(); points.put(g, Integer.valueOf(0))){
-			g = localIterator.next();
-		}
+		//Goal g;
+		//for (Iterator<Goal> localIterator = field.getGoals().iterator(); localIterator.hasNext(); points.put(g, Integer.valueOf(0))){
+		//	g = localIterator.next();
+		//}
 		Games.add(this);
 	}
 	
-	public void addPoint(Goal g){
-		points.put(g, Integer.valueOf(points.get(g).intValue() + 1));
-		String msg = Settings.GoalMessage.replace("&team", g.getTeam().getName());
-		for (Player current : players){
-			current.sendMessage(msg);
-		}
-	}
+	//public void addPoint(Goal g){
+	//	points.put(g, Integer.valueOf(points.get(g).intValue() + 1));
+	//	String msg = Settings.GoalMessage.replace("&team", g.getTeam().getName());
+	//	sendMessage(msg);
+		//for (Player current : players){
+		//	current.sendMessage(msg);
+		//}
+	//}
 	
 	public static gameType getGameTypeByString(String name){
 		name = name.toLowerCase();
@@ -67,13 +75,7 @@ public abstract class Game {
 		return GameType;
 	}
 	public String getName(){
-		if (GameType == gameType.Football) return "Football";
-		else if (GameType == gameType.Tennis) return "Tennis";
-		else if (GameType == gameType.Basketball) return "Basketball";
-		else if (GameType == gameType.Golf) return "Golf";
-		else if (GameType == gameType.Croquet) return "Croquet";
-		else if (GameType == gameType.Nothing) return "Nothing";
-		else return null;
+		return GameType.toString();
 	}
 	public GameField getField(){
 		return field;
@@ -138,6 +140,17 @@ public abstract class Game {
 	}
 	
 	public abstract boolean addPlayer(Player player, Team team);
+	
+	/**
+	 * Sends a message to the players of all teams in this game.
+	 * @param message
+	 * @see Team#sendMessage(String) Team.sendMessage
+	 */
+	public void sendMessage(String message){
+		for (Team current : teams){
+			current.sendMessage(message);
+		}
+	}
 	
 	public boolean getJoinable(){
 		return joinable;

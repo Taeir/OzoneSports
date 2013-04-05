@@ -20,12 +20,14 @@ import org.bukkit.util.Vector;
 public class MCSListener implements Listener{
 	
 	//This event should only be enabled if a game is started, and should be disabled when the game stops.
-	public void onPlayerMove(PlayerMoveEvent event){
+	@EventHandler
+	private void onPlayerMove(PlayerMoveEvent event){
 		Player player = event.getPlayer();
 		MCSPlayer mcsPlayer = MCSPlayer.getMCSPlayer(player);
-		
-		if (!mcsPlayer.isInGame()) return;
 		Game currentGame = mcsPlayer.getGame();
+		
+		if (currentGame == null) return;
+		
 		if (!currentGame.isRunning()) return;
 		
 		//Check if out of bounds

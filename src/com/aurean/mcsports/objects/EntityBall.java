@@ -75,7 +75,9 @@ public class EntityBall extends Ball {
 		for (Goal current : field.getGoals()){
 			if (current.containsBlock(newLoc)){
 				reset();
-				game.addPoint(current);
+				if (current.getTeam() == null) return;
+				current.getTeam().addScore(1);
+				break;
 			}
 		}
 		

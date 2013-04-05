@@ -11,36 +11,58 @@ public abstract class Team {
 	protected ArrayList<Player> players = new ArrayList<Player>();
 	protected Goal goal1, goal2;
 	protected boolean hasBall = false;
+	protected int score;
+
 	public Team(String name, Color color, Goal goal1, Goal goal2){
 		this.color = color;
 		this.name = name;
 		this.goal1 = goal1;
 		this.goal2 = goal2;
+		this.score = 0;
 	}
 	
+	@Override
+	public String toString() {
+		return "Team [name=" + name + ", color=" + color.asRGB() + ", players="
+				+ players.toString() + ", goal1=" + goal1.toString() + ", goal2=" + goal2.toString()
+				+ ", hasBall=" + hasBall + ", score=" + score + "]";
+	}
+
 	public Team(String name, int red, int green, int blue, Goal goal1, Goal goal2){
 		this.color = Color.fromRGB(red, green, blue);
 		this.name = name;
 		this.goal1 = goal1;
 		this.goal2 = goal2;
+		this.score = 0;
 	}
 	
-	/**
-	 * @return The color this team has.
-	 */
+	/** @return The color this team has. */
 	public Color getColor(){
 		return color;
 	}
-	/**
-	 * @return The name of this team.
-	 */
+	/** @return The name of this team. */
 	public String getName(){
 		return name;
 	}
 	
+	/** @return The score this team has.*/
+	public int getScore() {
+		return score;
+	}
 	/**
-	 * @return All the players in this team.
+	 * Set this teams score to a new value.
+	 * @see #addScore(int)
 	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	/** Add or remove from a teams current score. */
+	public void addScore(int amount){
+		this.score += amount;
+	}
+	
+	/** @return All the players in this team. */
 	public ArrayList<Player> getPlayers(){
 		return players;
 	}
@@ -67,9 +89,7 @@ public abstract class Team {
 		return new Goal[] { goal1, goal2 };
 	}
 	
-	/**
-	 * @return If this team currently has the ball.
-	 */
+	/** @return If this team currently has the ball. */
 	public boolean hasBall(){
 		return hasBall;
 	}
@@ -85,9 +105,17 @@ public abstract class Team {
 	 */
 	public abstract void removeBall();
 
-	/**
-	 * Should be called when a ball is passed <b>within</b> a team.
-	 */
+	/** Should be called when a ball is passed <b>within</b> a team. */
 	public abstract void passBall(Ball ball, Player from, Player to);
-
+	
+	
+	/**
+	 * Send a message to all members of this team.
+	 * @param message
+	 */
+	public void sendMessage(String message){
+		for (Player current : players){
+			current.sendMessage(message);
+		}
+	}
 }
